@@ -12,20 +12,14 @@ This project implement a custom role based authentication in FastAPI with JWT
 1. First, you need to setup the environment vars in `setting.py`
 
 ```python
-SECRET_KEY = '<SETUP SECRET KEY>'
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'expenses',
-        'USER': '<USER>',
-        'PASSWORD': '<PASSWORD>',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
-}
+DATABASE_NAME=
+DATABASE_USER=
+DATABASE_PASSWORD=
+DATABASE_HOST=
+DATABASE_PORT=
+SECRET_KEY=<openssl rand -hex 32>
+ALLOWED_HOSTS=localhost,127.0.0.1
 ```
-
 
 2. Now, make migrations
 
@@ -40,6 +34,23 @@ python .\manage.py runserver
 ```
 
 ---
+
+### Docker Deploy 🐳
+
+1. To deploy only run the command
+
+```bash
+docker-compose up
+```
+
+2. Finally, make the migrations 
+
+```bash
+docker-compose exec web python manage.py migrate
+```
+
+---
+
 
 # How works?
 

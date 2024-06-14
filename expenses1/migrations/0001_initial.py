@@ -3,6 +3,14 @@
 import django.db.models.deletion
 import django.utils.timezone
 from django.db import migrations, models
+from django.db import migrations
+
+
+def create_initial_categories(apps, schema_editor):
+    TypeCategoryModel = apps.get_model('expenses1', 'TypeCategoryModel')
+
+    TypeCategoryModel.objects.create(name='EXPENSE')
+    TypeCategoryModel.objects.create(name='INCOME')
 
 
 class Migration(migrations.Migration):
@@ -16,15 +24,19 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='CategoryModel',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=30, unique=True, verbose_name='Title')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
+                ('title', models.CharField(max_length=30,
+                 unique=True, verbose_name='Title')),
             ],
         ),
         migrations.CreateModel(
             name='TypeCategoryModel',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=20, unique=True, verbose_name='Name')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
+                ('name', models.CharField(max_length=20,
+                 unique=True, verbose_name='Name')),
             ],
             options={
                 'verbose_name': 'Type Category',
@@ -35,16 +47,22 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='RecordModel',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('mount', models.DecimalField(decimal_places=2, max_digits=10, verbose_name='Mount')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
+                ('mount', models.DecimalField(decimal_places=2,
+                 max_digits=10, verbose_name='Mount')),
                 ('note', models.TextField(blank=True, null=True)),
-                ('register_date', models.DateTimeField(default=django.utils.timezone.now)),
-                ('fk_id_category', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='expenses1.categorymodel')),
+                ('register_date', models.DateTimeField(
+                    default=django.utils.timezone.now)),
+                ('fk_id_category', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to='expenses1.categorymodel')),
             ],
         ),
         migrations.AddField(
             model_name='categorymodel',
             name='fk_id_type',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='expenses1.typecategorymodel'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to='expenses1.typecategorymodel'),
         ),
+        migrations.RunPython(create_initial_categories),
     ]
