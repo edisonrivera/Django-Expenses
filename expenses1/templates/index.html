@@ -8,7 +8,7 @@
         <canvas id="generalChart"></canvas>
     </div>
     <div class="div2">
-        <canvas id="mountChart"></canvas>
+        <canvas id="incomeChart"></canvas>
     </div>
     <div class="div3">
         <canvas id="expenseChart"></canvas>
@@ -63,11 +63,11 @@
     
     
     var generalChart = document.getElementById('generalChart').getContext('2d');
-    var mountChart = document.getElementById('mountChart').getContext('2d');
+    var incomeChart = document.getElementById('incomeChart').getContext('2d');
     var expenseChart = document.getElementById('expenseChart').getContext('2d');
 
     makeDonut(generalChart, "General", {{labels_general|safe}}, {{data_general|safe}});
-    makeDonut(mountChart, "Mounts", {{labels_mounts|safe}}, {{mounts_data|safe}});
+    makeDonut(incomeChart, "Incomes", {{labels_mounts|safe}}, {{mounts_data|safe}});
     makeDonut(expenseChart, "Expenses", {{labels_expenses|safe}}, {{expenses_data|safe}});
 
 
