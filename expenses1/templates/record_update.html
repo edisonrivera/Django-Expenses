@@ -1,0 +1,19 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('modalRecord')">&times;</span>
+        <form class="record-form" method="POST">
+            {% csrf_token %}
+            <label for="mount" class="form-label">Mount:</label>
+            {{ form.mount }}
+            <label for="note" class="form-label">Note:</label>
+            {{ form.note }}
+            <label for="fk_id_category" class="form-label">Category:</label>
+            {{ form.fk_id_category }}
+            <button class="form-button" type="submit">Save</button>
+        </form>
+    </div>
+{% endblock %}

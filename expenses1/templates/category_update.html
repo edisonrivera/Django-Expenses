@@ -1,0 +1,16 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <div class="modal-content">
+        <form class="category-form" method="POST">
+            {% csrf_token %}
+            <label for="id_title" class="form-label">Title:</label>
+            {{ form.title }}
+            <label for="id_fk_id_type" class="form-label">Category Type:</label>
+            {{ form.fk_id_type }}
+            <button class="form-button" type="submit">Save</button>
+        </form>
+    </div>
+{% endblock %}

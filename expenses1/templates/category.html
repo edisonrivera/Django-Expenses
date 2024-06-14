@@ -1,0 +1,64 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Categories{% endblock %}
+
+{% block content %}
+    {% if messages %}
+        <div class="messages-container">
+            <ul id='showMe' class="messages">
+            {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    <div class="container-add-new">
+        <button class="add-new_button" onclick="openModal('myModal')">➕ Add New Category</button>   
+    </div>
+    <div class="ag-format-container">
+        <div class="ag-courses_box">
+            {% for category in categories %}
+                <div class="ag-courses_item">
+                    <a href="#" class="ag-courses-item_link">
+                        <div class="ag-courses-item_bg"></div>
+                
+                        <div class="ag-courses-item_title">
+                            {{category.title}} {% if category.fk_id_type.name == 'EXPENSE' %}💱 {% else %} 💰 {% endif %}
+                        </div>
+                
+                        <div class="ag-courses-item_date-box">
+                            Type:
+                            <span class="ag-courses-item_date">
+                            {{category.fk_id_type.name}}
+                            </span>
+                        </div>
+                        <div class="ag-courses-actions">
+                            <form class="ag-courses-action-buttons-category_form" action="{% url 'delete_category' category.id %}" method="POST">
+                                {% csrf_token %}
+                                <button class="ag-courses-actions-buttons_delete">❌</button>
+                            </form>
+                            <form class="ag-courses-action-buttons-category_form" action="{% url 'update_category' category.id %}" method="get">
+                                {% csrf_token %}
+                                <button class="ag-courses-action-buttons_category ag-courses-actions_update">📘</button>
+                            </form>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('myModal')">&times;</span>
+            <form class="category-form" method="POST">
+                {% csrf_token %}
+                <label for="id_title" class="form-label">Title:</label>
+                {{ form.title }}
+                <label for="id_fk_id_type" class="form-label">Category Type:</label>
+                {{ form.fk_id_type }}
+                <button class="form-button" type="submit">Save</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <form method="POST">
+        <div class="model-form-historial">
+            <form class="record-form" method="POST">
+                {% csrf_token %}
+                <label for="mount" class="form-label">Note:</label>
+                {{ form_record.note }}
+                <label for="note" class="form-label">Type Category:</label>
+                {{ form_category.fk_id_type }}
+                <label for="fk_id_category" class="form-label">Category:</label>
+                {{ form_record.fk_id_category }}
+                <label for="fk_id_category" class="form-label">Date Start:</label>
+                {{ form_record.start_date }}
+                <label for="fk_id_category" class="form-label">Date Start:</label>
+                {{ form_record.end_date }}
+                <button class="form-button" type="submit">🔍 Search</button>
+            </form>
+        </div>
+    </form>
+    <div class="ag-format-container">
+        {% if records %}
+            {% for record in records %}
+                <div class="ag-courses_item">
+                    <a href="#" class="ag-courses-item_link">
+                        <div class="ag-courses-item_bg"></div>
+                        <p class="ag-courses-item_category">{{record.fk_id_category.title}}<p>
+                        <div class="ag-courses-item_title">
+                            {{record.note}}
+                        </div>
+
+                        <div class="ag-courses-amount">
+                            {% if record.fk_id_category.fk_id_type.name == 'EXPENSE' %}
+                                <p class="ag-courses-amount_expense">- $ {{record.mount}}</p>
+                            {% else %}
+                                <p class="ag-courses-amount_income">+ $ {{record.mount}}</p>
+                            {% endif %}
+                        </div>
+
+                        <div class="ag-courses-item_date-box">
+                            Type:
+                            <span class="ag-courses-item_date">
+                                {{record.fk_id_category.fk_id_type.name}}
+                            </span>
+                        </div>
+                        <div class="ag-courses-actions">
+                            <form class="ag-courses-action-buttons-category_form" action="{% url 'delete_record' record.id %}" method="POST">
+                                {% csrf_token %}
+                                <button class="ag-courses-actions-buttons_delete">❌</button>
+                            </form>
+                            <form class="ag-courses-action-buttons-category_form" action="{% url 'update_record' record.id %}" method="GET">
+                                {% csrf_token %}
+                                <button class="ag-courses-action-buttons_category ag-courses-actions_update">📘</button>
+                            </form>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+
+        {% else %}
+                <p class="note_alert">No existen registros</p>
+        {% endif %}
+    </div>
+{% endblock %}
