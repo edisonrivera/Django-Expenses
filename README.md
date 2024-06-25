@@ -1,6 +1,6 @@
 ## Django Expenses Dashborad 💹
 
-This project implement a custom role based authentication in FastAPI with JWT
+This project implement a way to register your expenses and records
 
 <p align="center">
 <a href="https://www.djangoproject.com/" target="blank"><img align="center" src="https://img.shields.io/badge/django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white" alt="FastAPI" height="30"/></a>
